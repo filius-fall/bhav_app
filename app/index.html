@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello world</h1>
+    <table>
+        <thead>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+        </thead>
+        <tbody>
+            {% for i in data %}
+                
+                <tr>
+                    <th>{{ i.code }}</th>
+                    <th>{{ i.name }}</th>
+                    <th>{{ i.open }}</th>
+                    <th>{{ i.high }}</th>
+                    <th>{{ i.low }}</th>
+                    <th>{{ i.close }}</th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>This is title: {{title}} and {{n}}</p>
+
+</body>
+</html>
