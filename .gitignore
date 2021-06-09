@@ -1,5 +1,6 @@
 venv
-app/__pycache__
-app/*.CSV
-app/*.csv
+__pycache__/
+*.CSV
+*.csv
 __pycache__
+app/__pycache__
