@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date,timedelta
 import os
 import io,zipfile
 from urllib.request import Request, urlopen
@@ -7,28 +7,50 @@ import redis,json,requests
 
 r = redis.StrictRedis()
 
-# today = date.today()
-# d1 = today.strftime("%d%m%y")
-date = date.today()
+today = date.today()
+
 headers = {'User-Agent': 'Mozilla/5.0 (Linux Mint 20) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
 
 
-url = requests.get(url = 'http://www.bseindia.com/download/BhavCopy/Equity/EQ{:%d%m%y}_CSV.ZIP'.format(date),headers=headers)
 
 
+def get_date():
+
+    try:
+        date = today
+        url = requests.get(url = 'http://www.bseindia.com/download/BhavCopy/Equity/EQ{:%d%m%y}_CSV.ZIP'.format(date),headers=headers)
+        url.raise_for_status()
+        
+    except requests.HTTPError:
+        date = date - timedelta(days=1)
+        url = requests.get(url = 'http://www.bseindia.com/download/BhavCopy/Equity/EQ{:%d%m%y}_CSV.ZIP'.format(date),headers=headers)
+        
+    return date
+
+def get_file_name():
+    date = get_date()
+    FILE_NAME = f"{date.strftime('EQ%d%m%y_CSV')}".replace('_','.')
+
+    FILE = os.path.join('./media',FILE_NAME)
+
+    return FILE
+
+def get_url():
+
+    date = get_date()
+    url = requests.get(url = 'http://www.bseindia.com/download/BhavCopy/Equity/EQ{:%d%m%y}_CSV.ZIP'.format(date),headers=headers)
+
+    return url
 
 
-FILE_NAME = f"{date.strftime('EQ%d%m%y_CSV')}".replace('_','.')
-
-FILE = os.path.join('./media',FILE_NAME)
 def get_today():
     return date.today().strftime('%d-%m-%y')
 
 def download_and_extract_csv():
+    url = get_url()
     zip_file = zipfile.ZipFile(io.BytesIO(url.content))
     zip_file.extractall(os.path.abspath('./media'))
-    # csv_file = os.path.join('./media',FILE)
-    return FILE_NAME
+    return None
 
 
 
@@ -52,7 +74,8 @@ def return_only(csv_file):
 
 def return_required_data(n: int):
     k = []
-    data_list = return_only(FILE)
+    file_name = get_file_name()
+    data_list = return_only(file_name)
     count = 0
     for i in data_list:
         if count < n:
@@ -66,7 +89,8 @@ def return_required_data(n: int):
 
 def push_values_to_redis():
     r.flushall()
-    data = return_only(FILE)
+    file_name = get_file_name()
+    data = return_only(file_name)
     for i in data:
         key = f"BSE:{i.get('name').strip()}-{i.get('code')}"
         r.set(key,json.dumps(i),ex=86400)
