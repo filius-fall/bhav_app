@@ -26,28 +26,12 @@ def validate_url(date):
 
 def get_date():
 
-    # if validate_url(today):
-    #     date = today
-    # else:
-    #     date = today - timedelta(days=1)
     date = today
     while True:
         if validate_url(date):
-            # print('SUCCES')
-            # print(date)
             return date
         else:
-            date = date - timedelta(days=1)
-
-    # try:
-    #     date = today
-    #     url = requests.get(url = 'http://www.bseindia.com/download/BhavCopy/Equity/EQ{:%d%m%y}_CSV.ZIP'.format(date),headers=headers)
-    #     url.raise_for_status()
-        
-    # except requests.HTTPError:
-    #     date = date - timedelta(days=1)
-    #     # url = requests.get(url = 'http://www.bseindia.com/download/BhavCopy/Equity/EQ{:%d%m%y}_CSV.ZIP'.format(date),headers=headers)
-        
+            date = date - timedelta(days=1)  
     return date
 
 def get_file_name():
