@@ -12,18 +12,41 @@ today = date.today()
 headers = {'User-Agent': 'Mozilla/5.0 (Linux Mint 20) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
 
 
+def validate_url(date):
+    
+    try:
+        url = requests.get(url = 'http://www.bseindia.com/download/BhavCopy/Equity/EQ{:%d%m%y}_CSV.ZIP'.format(date),headers=headers)
+        url.raise_for_status()
+    except requests.HTTPError:
+        return False
+
+    return url
+
 
 
 def get_date():
 
-    try:
-        date = today
-        url = requests.get(url = 'http://www.bseindia.com/download/BhavCopy/Equity/EQ{:%d%m%y}_CSV.ZIP'.format(date),headers=headers)
-        url.raise_for_status()
+    # if validate_url(today):
+    #     date = today
+    # else:
+    #     date = today - timedelta(days=1)
+    date = today
+    while True:
+        if validate_url(date):
+            # print('SUCCES')
+            # print(date)
+            return date
+        else:
+            date = date - timedelta(days=1)
+
+    # try:
+    #     date = today
+    #     url = requests.get(url = 'http://www.bseindia.com/download/BhavCopy/Equity/EQ{:%d%m%y}_CSV.ZIP'.format(date),headers=headers)
+    #     url.raise_for_status()
         
-    except requests.HTTPError:
-        date = date - timedelta(days=1)
-        url = requests.get(url = 'http://www.bseindia.com/download/BhavCopy/Equity/EQ{:%d%m%y}_CSV.ZIP'.format(date),headers=headers)
+    # except requests.HTTPError:
+    #     date = date - timedelta(days=1)
+    #     # url = requests.get(url = 'http://www.bseindia.com/download/BhavCopy/Equity/EQ{:%d%m%y}_CSV.ZIP'.format(date),headers=headers)
         
     return date
 
@@ -37,8 +60,8 @@ def get_file_name():
 
 def get_url():
 
-    date = get_date()
-    url = requests.get(url = 'http://www.bseindia.com/download/BhavCopy/Equity/EQ{:%d%m%y}_CSV.ZIP'.format(date),headers=headers)
+    k = get_date()
+    url = requests.get(url = 'http://www.bseindia.com/download/BhavCopy/Equity/EQ{:%d%m%y}_CSV.ZIP'.format(k),headers=headers)
 
     return url
 
@@ -108,6 +131,13 @@ def search_values(search):
         data.append(json.loads(r.get(j).decode('UTF-8')))
 
     return data
+
+def validate_file():
+        try:
+            file = open(get_file_name())
+        except FileNotFoundError:
+            download_and_extract_csv()
+            push_values_to_redis()
 
 if __name__ == "__main__":
     download_and_extract_csv()

@@ -10,3 +10,7 @@ conf = {
         "tools.staticdir.dir" : os.path.abspath("./templates")
     }
 }
+
+
+REDIS_NAME = "Sreeram"
+REDIS_SITE = "LOCAL HOST"
