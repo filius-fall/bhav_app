@@ -16,5 +16,9 @@ conf = {
     "/favicon.ico" : {
         "tools.staticdir.on" : True,
         "tools.staticdir.dir" : os.path.abspath("./app/static/favicon/favicon.ico")
+    },
+    "/js":{
+        "tools.staticdir.on" : True,
+        "tools.staticdir.dir" : os.path.abspath("./app/static/js")
     }
 }

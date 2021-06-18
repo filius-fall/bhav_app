@@ -4,7 +4,7 @@ import requests
 import cherrypy
 from jinja2 import Environment,FileSystemLoader
 
-from .bhav import get_values_from_redis,get_url,download_extract_url,HEADERS,get_date,r,push_to_redis,file_name,get_date,TODAY,search_values
+from .bhav import get_values_from_redis,get_url,download_extract_url,HEADERS,get_date,r,push_to_redis,file_name,get_date,TODAY,search_values,get_scan_values
 from .settings import conf
 
 
@@ -14,7 +14,7 @@ env = Environment(loader=FileSystemLoader(current_dir),trim_blocks=True)
 class Bhav(object):
 
     @cherrypy.expose
-    def index(self,length = ""):
+    def index(self,length = "",val=0):
         
         template = env.get_template('/templates/index.html')
 
@@ -29,13 +29,17 @@ class Bhav(object):
             push_to_redis(csv_file)
         
         if length == "":
-            data = get_values_from_redis()
+            # data = get_values_from_redis()
+            data = get_scan_values(int(val))
         else:
             data = search_values(length)
 
         count = 1
 
-        return template.render(data = data,title = "Title",length = length,count = count, date = get_date(),today = TODAY)
+        return template.render(data = data,title = "Title",length = length,count = count, date = get_date(),today = TODAY,val = val)
 
+    @cherrypy.expose
+    def inc(self,val=0):
+        return str(int(val) + 1)
 
 

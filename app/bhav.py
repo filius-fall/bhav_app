@@ -178,3 +178,21 @@ def search_values(n):
         values.append(json.loads(r.get(j)))
     
     return values
+
+
+def get_scan_values(index):
+
+    k = []
+    m = []
+    l = r.scan(cursor=0)
+    k.append(l[1])
+
+    for i in range(r.dbsize()):
+        l = r.scan(cursor=l[0])
+        k.append(l[1])
+
+    print(len(k))
+    for j in k[index]:
+        m.append(json.loads(r.get(j)))
+
+    return m

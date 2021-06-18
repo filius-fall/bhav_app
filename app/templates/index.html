@@ -46,6 +46,13 @@
                 {% endfor %}
             </tbody>
         </table>
+        <form method="get" action="index">
+            {% if val >= 0 %}
+                <button type="submit" onclick="decFunc()">Dec</button>
+            {% endif %}
+            <input id="val" type="text" value={{ val }} name="val" />
+            <button type="submit" onclick="incFunc()">Inc</button>
+        </form>
     </div>
 </div>
 {% endblock %}
