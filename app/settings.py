@@ -1,26 +1,20 @@
 import os
 
-PATH = os.path.abspath(os.path.dirname(__file__))
-
-conf = {    
+conf = {
     "/css":{
         "tools.staticdir.on" : True,
-        "tools.staticdir.dir" : os.path.join(PATH,'css')
+        "tools.staticdir.dir" : os.path.abspath("./app/static/css")
     },
     "/html" : {
         "tools.staticdir.on" : True,
-        "tools.staticdir.dir" : os.path.join(PATH,'templates')
+        "tools.staticdir.dir" : os.path.abspath("./app/templates")
     },
     "/favicon":{
         "tools.staticdir.on" : True,
-        "tools.staticdir.dir" : os.path.abspath("../static/favicon")
+        "tools.staticdir.dir" : os.path.abspath("./app/static/favicon")
     },
     "/favicon.ico" : {
         "tools.staticdir.on" : True,
-        "tools.staticdir.dir" : os.path.abspath("../static/favicon/favicon.ico")
-    },
-    "/templates" : {
-        "tools.staticdir.on" : True,
-        "tools.staticdir.dir" : os.path.abspath("./templates")
+        "tools.staticdir.dir" : os.path.abspath("./app/static/favicon/favicon.ico")
     }
 }

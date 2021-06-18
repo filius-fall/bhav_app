@@ -16,11 +16,12 @@
             </form>
         </div>
     </div>
-    {% if today != date %}
+    {% if date != today %}
         <div class="alert alert-warning" role="alert">
             Today's Bhav report is yet to be published. So we are showing you the last Bhavcopy report
         </div>
     {% endif %}
+
     <div>
         <table class="table">
             <thead class="table-dark">
@@ -33,8 +34,8 @@
             </thead>
             <tbody>
                 {% for i in data %}
-                    
                     <tr>
+                        
                         <td>{{ i.code }}</td>
                         <td>{{ i.name }}</td>
                         <td>{{ i.open }}</td>
@@ -45,7 +46,6 @@
                 {% endfor %}
             </tbody>
         </table>
-        
     </div>
 </div>
 {% endblock %}

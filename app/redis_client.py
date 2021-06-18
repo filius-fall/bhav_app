@@ -16,13 +16,12 @@ test = os.getenv("TEST")
 
 class RedisClient:
 
-    def connect(self, decode_response = False):
-        print("ITS TESTING TIME KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK-------LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
-        print(test)
+    def connect(self):
         return redis.StrictRedis(
             host = host,
             db = db,
             port = port,
             username = username,
             password = password,
+            decode_responses = True
         )
