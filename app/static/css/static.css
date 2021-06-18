@@ -9,6 +9,7 @@
 
 input, button{
     margin:0;
+    position: absolute;
 }
 
 .in{
@@ -20,3 +21,7 @@ input, button{
 /* .nav-custom{
     margin-bottom: 40px;
 } */
+
+#val{
+    float: left;
+}

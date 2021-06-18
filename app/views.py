@@ -4,7 +4,7 @@ import requests
 import cherrypy
 from jinja2 import Environment,FileSystemLoader
 
-from .bhav import get_values_from_redis,get_url,download_extract_url,HEADERS,get_date,r,push_to_redis,file_name,get_date,TODAY,search_values,get_scan_values
+from .bhav import get_values_from_redis,get_url,download_extract_url,HEADERS,get_date,r,push_to_redis,file_name,get_date,TODAY,search_values,get_scan_values,get_scan_search_values
 from .settings import conf
 
 
@@ -31,10 +31,10 @@ class Bhav(object):
         if length == "":
             # data = get_values_from_redis()
             data = get_scan_values(int(val))
+            count = 1
         else:
             data = search_values(length)
-
-        count = 1
+            count = 0
 
         return template.render(data = data,title = "Title",length = length,count = count, date = get_date(),today = TODAY,val = val)
 

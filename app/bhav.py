@@ -188,10 +188,30 @@ def get_scan_values(index):
     k.append(l[1])
 
     for i in range(r.dbsize()):
-        l = r.scan(cursor=l[0])
+        l = r.scan(cursor=l[0],count=10)
         k.append(l[1])
 
     print(len(k))
+    for j in k[index]:
+        m.append(json.loads(r.get(j)))
+
+    return m
+
+def get_scan_search_values(search,index):
+
+    k = []
+    m = []
+    s = "BSE:" + search + "*"
+    l = r.scan(cursor=0,match=s)
+    k.append(l[1])
+
+    for i in range(r.dbsize()):
+        l = r.scan(l[0],s,10)
+        k.append(l[1])
+
+    # print(k)
+
+    # print(len(k))
     for j in k[index]:
         m.append(json.loads(r.get(j)))
 
