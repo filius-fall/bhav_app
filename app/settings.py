@@ -20,5 +20,9 @@ conf = {
     "/js":{
         "tools.staticdir.on" : True,
         "tools.staticdir.dir" : os.path.abspath("./app/static/js")
-    }
+    },
+    "/static.css":{
+        "tools.staticdir.on" : True,
+        "tools.staticdir.dir" : os.path.abspath("./app/static/css/static.css")
+    },
 }

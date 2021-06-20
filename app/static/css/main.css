@@ -1,0 +1,14 @@
+.pp{
+    color: blueviolet;
+}
+
+li{
+    display: inline;
+    float: left;
+    list-style-type: none; 
+    padding-right: 20px;
+}
+
+.bottom-div{
+    margin-left: 20px;
+}
