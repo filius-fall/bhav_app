@@ -1,4 +1,9 @@
-console.log("FOUND js")
+console.log("JavaScript Loaded")
+
+setInterval(function(){
+    window.location.reload();
+    console.log('Reloading...')
+},1800000)
 
 function incFunc(){
     k =parseInt(document.getElementById("val").value);

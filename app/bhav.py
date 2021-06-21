@@ -181,7 +181,13 @@ def search_values(n):
 
 
 def get_scan_values(index):
+    """
+    Arguments    :  Integer
+    Returns      :  List
+    Descryption  :
+                    This Function returns the scan values from Redis database as List
 
+    """
     k = []
     m = []
     l = r.scan(cursor=0)
@@ -198,6 +204,14 @@ def get_scan_values(index):
     return m
 
 def get_scan_search_values(search,index):
+    """
+    Arguments    :  search : String
+                    index  : Integer
+    Returns      :  List
+    Descryption  :
+                    This Function returns the search values from Redis database as List
+
+    """
 
     k = []
     m = []
@@ -209,9 +223,6 @@ def get_scan_search_values(search,index):
         l = r.scan(l[0],s,10)
         k.append(l[1])
 
-    # print(k)
-
-    # print(len(k))
     for j in k[index]:
         m.append(json.loads(r.get(j)))
 
